@@ -120,22 +120,19 @@ const postUserSql = asyncHandler(async (req, res) => {
     //     });
     // })
 
-    (async () => {
-        try {
-            const newUser = await UserSql.create({
-                username: username,
-                email: email,
-                password: password,
-            });
-            res.status(200).json({
-                mesage: "New user created"
-            })
-        } catch (error) {
-            console.error("Error creating user:", error);
-            res.status(400)
-            throw new Error("can't create User")
-        }
-    })();
+    try {
+        await UserSql.create({
+            username: username,
+            email: email,
+            password: password,
+        });
+        res.status(200).json({
+            mesage: "New user created"
+        })
+    } catch (error) {
+        res.status(400)
+        throw new Error("can't create User")
+    }
 
 
 

@@ -12,7 +12,7 @@ const swagger = require('../utils/swagger/swagger');
 const { connectRedis } = require('../databases/redis/redis');
 const cookieParser = require('cookie-parser')
 const useragent = require('express-useragent');
-const { mysqlConnect, sequelize, sequelizeConnect } = require('../databases/mysql/mysqlConnect');
+const { mysqlConnect, sequelize, sequelizeConnect, sequelizeSync } = require('../databases/mysql/mysqlConnect');
 
 // test
 
@@ -35,14 +35,7 @@ mongodbConnect();
 connectRedis();
 // mysqlConnect();
 sequelizeConnect();
-(async () => {
-    try {
-        await sequelize.sync({ force: false }); // Đồng bộ tất cả model, không xóa dữ liệu cũ
-        console.log("Database & tables synced!");
-    } catch (error) {
-        console.error("Error syncing database:", error);
-    }
-})();
+sequelizeSync()
 
 
 //init routers
